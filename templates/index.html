@@ -1,0 +1,71 @@
+<doctype html xmlns="http://www.w3.org/1999/html">
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1 style="font-size: 40px; font-weight: 600; background-image: linear-gradient(to left, #553c9a, #b393d3); color: transparent; background-clip: text;-webkit-background-clip: text;" align="center">
+                <img src="./static/decoration/flowers.gif" height="80px">
+                &nbsp Flowers Image Search
+                <img src="./static/decoration/rose.gif" height="100px">
+            </h1>
+        </div>
+
+        <div class="container">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Search by Text</label>
+                        <img src="./static/decoration/cartoon.gif" height="30px">
+                        <input type="text" name="search_text" class="form-control" placeholder="Flower Name" maxlength="25">
+                        <p style="color: #D8000C; background-color: #FFD2D2;">{{ text_empty}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Search by Image</label>
+                        <img src="./static/decoration/cartoon.gif" height="30px">
+                        <input type="file" name="query_img">
+                        <p style="color: #D8000C; background-color: #FFD2D2;">{{ image_empty}}</p>
+                    </div>
+                    <div>
+                      <label>Select method</label>
+                        <img src="./static/decoration/cartoon.gif" height="30px">
+                      <select  name="select_menu" class="form-control">
+                        <option>CNN</option>
+                        <option>SIFT+BOW</option>
+                      </select>
+                      <p class="help-block">Only Affect Search by Image</p>
+                    </div>
+                    <input align="center" type="submit" class="btn btn-primary">
+                    <img src="./static/decoration/ok_flower.gif" height="50px" align="center">
+                </form>
+
+            <h2 style="font-size: 30px; font-weight: 600; background-image: repeating-radial-gradient(circle closest-corner at 100px 100px, #553c9a, #ee4b2b 10%, #553c9a 20%); color: transparent; background-clip: text;-webkit-background-clip: text;">
+                Query:
+            </h2>
+            {% if search_query_text %}
+            <p class="lead">{{ search_query_text}}</p>
+            {% endif %}
+            {% if query_path %}
+            <img src="{{ query_path}}" width="300px" class="img-rounded">
+            {% endif %}
+
+<!--            <form method="POST" enctype="multipart/form-data">-->
+<!--                <input type="text" name="search_text">-->
+<!--                <input type="submit" name="text_submit">-->
+<!--            </form>-->
+
+
+
+            <h2 style="font-size: 30px; font-weight: 600; background-image: repeating-radial-gradient(circle closest-corner at 100px 100px, #553c9a, #ee4b2b 10%, #553c9a 20%); color: transparent; background-clip: text;-webkit-background-clip: text;">
+                Results:
+            </h2>
+            {% for score in scores %}
+            <figure style="float: left; margin-right: 20px; margin-bottom: 20px;">
+                <img src="{{ score[1] }}" height="200px" class="img-rounded">
+                <figcaption style="text-align: center"> {{ score[0] }}</figcaption>
+            </figure>
+            {% endfor %}
+        </div>
+    </body>
+</html>
+</doctype>
